@@ -1,10 +1,10 @@
 FROM fedora:38
 
-ARG VERSION
-ARG USER
-ARG PASS
+ARG TAILF_USERNAME
+ARG TAILF_PASSWORD
+ARG CONFD_VERSION
 
-ENV url="https://support.tail-f.com/delivery/download/confd/$VERSION/confd-$VERSION.linux.x86_64.signed.bin"
+ENV CONFD_URL="https://support.tail-f.com/delivery/download/confd/$CONFD_VERSION/confd-$CONFD_VERSION.linux.x86_64.signed.bin"
 
 RUN dnf -y update && \
     dnf -y install curl openssh openssl openssl1.1 python python3-paramiko && \
@@ -12,7 +12,7 @@ RUN dnf -y update && \
 
 WORKDIR /root
 
-RUN curl -u $USER:$PASS -O $url && \
-    sh confd-$VERSION.linux.x86_64.signed.bin && \
-    sh confd-$VERSION.linux.x86_64.installer.bin confd-$VERSION && \
-    echo ". ~/confd-$VERSION/confdrc" >> .bashrc
+RUN curl -u $TAILF_USERNAME:$TAILF_PASSWORD -O $CONFD_URL && \
+    sh confd-$CONFD_VERSION.linux.x86_64.signed.bin && \
+    sh confd-$CONFD_VERSION.linux.x86_64.installer.bin confd-$CONFD_VERSION && \
+    echo ". ~/confd-$CONFD_VERSION/confdrc" >> .bashrc
