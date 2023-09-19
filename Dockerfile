@@ -15,3 +15,5 @@ WORKDIR /root
 RUN curl -u $USER:$PASS -O $url && \
     sh confd-$VERSION.linux.x86_64.signed.bin && \
     sh confd-$VERSION.linux.x86_64.installer.bin confd-$VERSION
+
+RUN echo ". ~/confd-$VERSION/confdrc" >> .bashrc
