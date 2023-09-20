@@ -1,4 +1,4 @@
-FROM fedora:38
+FROM ubuntu:jammy
 
 ARG TAILF_USERNAME
 ARG TAILF_PASSWORD
@@ -6,9 +6,8 @@ ARG CONFD_VERSION
 
 ENV CONFD_URL="https://support.tail-f.com/delivery/download/confd/$CONFD_VERSION/confd-$CONFD_VERSION.linux.x86_64.signed.bin"
 
-RUN dnf -y update && \
-    dnf -y install curl openssh openssl openssl1.1 python python3-paramiko && \
-    dnf clean all
+RUN apt update -y && \
+    apt install -y curl openssh-client openssh-server openssl python3 python3-paramiko
 
 WORKDIR /root
 
